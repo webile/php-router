@@ -1,0 +1,23 @@
+Options +FollowSymlinks
+RewriteEngine on
+#RewriteBase /
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule index\.html index.php
+Options -Indexes
+
+
+RewriteCond %{HTTP_HOST} ^xyz\.in
+RewriteRule ^(.*)$ https://www.xyz.in/$1 [R=permanent,L]
+RewriteCond %{HTTPS} off
+RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
+RewriteCond %{REQUEST_URI} /+[^\.]+$
+RewriteRule ^(.+[^/])$ %{REQUEST_URI}/ [R=301,L]
+
+#admin
+//this is for single params
+RewriteRule ^([A-Za-z0-9_-]+)/index.php$ ?page=ABC&category=$1 [L]
+
+//If you need two params use this.
+RewriteRule ^([A-Za-z0-9_-]+)/([A-Za-z0-9_-]+)/index.php$ ?page=ABC&category=$1&view=$2 [L]
