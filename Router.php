@@ -11,9 +11,13 @@ class Router
         $this->request = $request;
     }
 
+    /**
+     * Dynamic Method
+     * @param  [string] $name [HTTP Method]
+     * @param  [Array] $args
+     */
     function __call($name, $args) {
-        list($route, $method) = $args;
-        echo "<pre>"; print_r($args); 
+        list($route, $method) = $args; 
         if(!in_array(strtoupper($name), $this->supportedHttpMethods)) {
             $this->invalidMethodHandler();
         }
@@ -32,12 +36,16 @@ class Router
         return $result;
     }
 
+    /**
+     * Handle invalid request
+     * @return [type] [description]
+     */
     private function invalidMethodHandler() {
-      header("{$this->request->serverProtocol} 405 Method Not Allowed");
+        header("{$this->request->serverProtocol} 405 Method Not Allowed");
     }
 
     private function defaultRequestHandler() {
-      header("{$this->request->serverProtocol} 404 Not Found");
+        header("{$this->request->serverProtocol} 404 Not Found");
     }
 
     /**
@@ -56,7 +64,7 @@ class Router
 
         $method = $methodDictionary[$formatedRoute];
 
-        print_r($method);
+        // print_r($method);
         
         if(is_null($method)) {
             $this->defaultRequestHandler();

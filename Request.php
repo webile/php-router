@@ -23,6 +23,9 @@ class Request implements IRequest
         return $result;
     }
     
+    /** 
+     * @return json return json response
+     */
     public function getBody() {
         if($this->requestMethod === "GET") {
             return;
@@ -35,5 +38,13 @@ class Request implements IRequest
             return $result;
         }    
         return $body;
+    }
+
+    /**
+     * [Load Template]
+     * @param  $path [File Name]
+     */
+    public function view($path) {
+        require("view/".$path.".php");
     }
 }
